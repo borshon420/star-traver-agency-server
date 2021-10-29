@@ -23,6 +23,7 @@ async function run(){
         await client.connect();
         const database = client.db('star_travel_agency');
         const servicesCollection = database.collection('services');
+        const orderCollection = database.collection('orders')
 
         //GET API
         app.get('/services', async(req, res)=> {
@@ -39,6 +40,19 @@ async function run(){
             const service = await servicesCollection.findOne(query);
             res.json(service)
         })
+
+        
+
+        //GET ORDER API
+        app.post('/orders', async(req, res)=> {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            res.json(result)
+        })
+
+        
+
+        
     }
     finally{
         // await client.close();
