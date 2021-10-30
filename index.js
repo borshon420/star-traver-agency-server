@@ -41,16 +41,38 @@ async function run(){
             res.json(service)
         })
 
-        
+        // GET ORDERS API
+        app.get('/orders', async(req, res)=>{
+            const cursor = orderCollection.find({});
+            const orders = await cursor.toArray();
+            res.send(orders)
+            console.log('hitting the orders')
+        })
 
-        //GET ORDER API
+        // GET SINGLE API
+        app.get('/orders/:id', async(req, res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const order = await orderCollection.findOne(query);
+            res.json(order)
+            console.log('hitting the single order', order)
+        })
+
+        //POST ORDER API
         app.post('/orders', async(req, res)=> {
             const order = req.body;
             const result = await orderCollection.insertOne(order);
             res.json(result)
         })
 
-        
+        // DELETE API
+        app.delete('/orders/:id', async(req, res)=> {
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await orderCollection.deleteMany(query);
+            console.log('deleting result id', result)
+            res.json(result)
+        })
 
         
     }
