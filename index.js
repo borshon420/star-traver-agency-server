@@ -4,10 +4,8 @@ const ObjectId = require('mongodb').ObjectId;
 require('dotenv').config();
 const cors = require('cors');
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
-// starAgencyDb
-// GWGKk2ffobNpSUbt
 
 // MIDDLEWARE
 app.use(cors());
